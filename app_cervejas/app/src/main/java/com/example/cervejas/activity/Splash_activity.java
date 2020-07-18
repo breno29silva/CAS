@@ -54,7 +54,7 @@ public class Splash_activity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Beer>> call, Throwable t) {
-                Log.d("OI", "onResponse: " + t.getLocalizedMessage());
+
             }
         });
 
