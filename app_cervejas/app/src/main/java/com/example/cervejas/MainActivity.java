@@ -1,21 +1,16 @@
 package com.example.cervejas;
 
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.cervejas.activity.BeearDetails_activity;
 import com.example.cervejas.adapter.Beer_adapter;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.RecyclerItemClickListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,5 +68,6 @@ public class MainActivity extends AppCompatActivity {
         ));
 
     }
-
 }
+
+
