@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         beers = (List<Beer>) getIntent().getSerializableExtra("listBeers");
         controller = new MainController(MainActivity.this, beers, recyclerViewBeer);
 
-        controller.showScreen();
+
 
     }
 
@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
 
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        controller.showScreen();
     }
 }
 

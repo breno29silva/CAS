@@ -24,12 +24,14 @@ public class MainController {
     private FailInternetFragment failInternetFragment;
     private List<Beer> beers;
     private RecyclerView recyclerViewBeer;
+    private Beer_adapter adapter;
 
 
     public MainController(MainActivity mainActivity, List<Beer> beers, RecyclerView recyclerViewBeer) {
         this.mainActivity = mainActivity;
-        this.beers = beers;
         this.recyclerViewBeer = recyclerViewBeer;
+        this.beers = beers;
+        this.adapter = new Beer_adapter(this.beers);
     }
 
 
@@ -43,6 +45,7 @@ public class MainController {
 
 
     private boolean isConnected() {
+        //Verificando conecao
         ConnectivityManager cm =
                 (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -55,9 +58,6 @@ public class MainController {
 
 
     private void showRecycleView(RecyclerView recyclerViewBeer) {
-        //Configurando Adapter
-        Beer_adapter adapter = new Beer_adapter(beers);
-
         //Configurar RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mainActivity.getApplicationContext());
         recyclerViewBeer.setLayoutManager(layoutManager);
@@ -70,7 +70,7 @@ public class MainController {
                     @Override
                     public void onItemClick(View view, int position) {
                         Beer selectedBeer = beers.get(position);
-
+                        //Passando dados para BeearDetails_activity
                         Intent intent = new Intent(mainActivity, BeearDetails_activity.class);
                         intent.putExtra("selectBeer", selectedBeer);
                         mainActivity.startActivity(intent);
@@ -95,6 +95,10 @@ public class MainController {
         FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayoutMain, failInternetFragment);
         transaction.commit();
+    }
+
+    public void updateRecyclerView(){
+        adapter.notifyDataSetChanged();
     }
 
 }
