@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerViewBeer;
     private List<Beer> beers;
     private MainController controller;
-    private FailInternetFragment failInternetFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,57 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewBeer = findViewById(R.id.recyclerViewBeer);
         beers = new ArrayList<>();
-        controller = new MainController(getApplicationContext());
+        //Recuperando dados
+        beers = (List<Beer>) getIntent().getSerializableExtra("listBeers");
+        controller = new MainController(MainActivity.this, beers, recyclerViewBeer);
 
-
-        if (!controller.isConnected()) {
-
-            failInternetFragment = new FailInternetFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.frameLayoutMain, failInternetFragment);
-            transaction.commit();
-
-
-        } else {
-            //Recuperando dados
-            beers = (List<Beer>) getIntent().getSerializableExtra("listBeers");
-
-            //Configurando Adapter
-            final Beer_adapter adapter = new Beer_adapter(beers);
-
-            //Configurar RecyclerView
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-            recyclerViewBeer.setLayoutManager(layoutManager);
-            recyclerViewBeer.setHasFixedSize(true);
-            recyclerViewBeer.setAdapter(adapter);
-
-            recyclerViewBeer.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
-                    recyclerViewBeer,
-                    new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Beer selectedBeer = beers.get(position);
-
-                            Intent intent = new Intent(MainActivity.this, BeearDetails_activity.class);
-                            intent.putExtra("selectBeer", selectedBeer);
-                            startActivity(intent);
-
-                        }
-
-                        @Override
-                        public void onLongItemClick(View view, int position) {
-
-                        }
-
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        }
-                    }
-            ));
-
-        }
-
+        controller.showScreen();
 
     }
 
