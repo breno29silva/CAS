@@ -4,31 +4,32 @@ import java.io.Serializable;
 
 public class Beer implements Serializable {
 
-    private String title;
-    private String subTitle;
+
+    private String name;
+    private String tagline;
     private String description;
-    private String url_image;
+    private String image_url;
 
-    public Beer(String title, String subTitle, String description, String url) {
-        this.title = title;
-        this.subTitle = subTitle;
+    public Beer(String name, String tagline, String description, String url) {
+        this.name = name;
+        this.tagline = tagline;
         this.description = description;
-        this.url_image = url;
+        this.image_url = url;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public String getSubTitle() {
-        return subTitle;
+    public String getTagline() {
+        return tagline;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getUrl_image() {
-        return url_image;
+    public String getImage_url() {
+        return image_url;
     }
 }

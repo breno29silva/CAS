@@ -32,16 +32,15 @@ public class BeearDetails_activity extends AppCompatActivity {
         imageViewBeer = findViewById(R.id.imageViewBeer);
 
 
-
         //Recuperando dados
         beerSelected = (Beer) getIntent().getSerializableExtra("selectBeer");
 
-        if(beerSelected != null){
-            title.setText(beerSelected.getTitle());
-            subTitle.setText(beerSelected.getSubTitle());
-            description.setText(beerSelected.getDescription());
-            Images.showImages(imageViewBeer, beerSelected.getUrl_image());
-        }
+        //Carregando informacoes
+        title.setText(beerSelected.getName());
+        subTitle.setText(beerSelected.getTagline());
+        description.setText(beerSelected.getDescription());
+        Images.showImages(imageViewBeer, beerSelected.getImage_url());
+
     }
 
     @Override
