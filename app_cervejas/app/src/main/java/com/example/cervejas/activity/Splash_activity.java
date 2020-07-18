@@ -25,6 +25,7 @@ import retrofit2.Response;
 
 public class Splash_activity extends AppCompatActivity {
     private List<Beer> beers = new ArrayList<>();
+    private  SplashController splashController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class Splash_activity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_activity);
 
         ApiBeer apiBeer = new ApiBeer();
+
 
         //Esconder ActionBar
         getSupportActionBar().hide();
@@ -53,7 +55,6 @@ public class Splash_activity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Beer>> call, Throwable t) {
                 Log.d("OI", "onResponse: " + t.getLocalizedMessage());
-
             }
         });
 
@@ -61,7 +62,6 @@ public class Splash_activity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("listBeers", (Serializable) beers);
