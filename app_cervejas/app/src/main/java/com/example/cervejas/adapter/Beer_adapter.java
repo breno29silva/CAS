@@ -10,8 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cervejas.R;
+import com.example.cervejas.model.Beer;
+
+import java.util.List;
 
 public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder> {
+
+    private List<Beer> beers;
+
+    public Beer_adapter(List<Beer> beers) {
+        this.beers = beers;
+    }
 
     @NonNull
     @Override
@@ -26,14 +35,22 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            holder.title.setText("Título de texte");
-            holder.subTitle.setText("Sub title");
-            holder.btnIcon.setBackgroundResource(R.drawable.ic_star_gold_24dp);
+
+        Beer beer = beers.get(position);
+
+        holder.title.setText(beer.getTitle());
+        holder.subTitle.setText(beer.getSubTitle());
+        holder.btnIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return beers.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
