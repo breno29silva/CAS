@@ -69,7 +69,6 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
             @Override
             public void liked(LikeButton likeButton) {
                 helpers.saveData(beer);
-
             }
 
             @Override

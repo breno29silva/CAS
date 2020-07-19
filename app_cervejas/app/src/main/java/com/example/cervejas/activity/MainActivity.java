@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
+
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
@@ -74,6 +75,20 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemFavorite:
+                startActivity(new Intent(getApplicationContext(), FavoritesActivity.class));
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+
 }
 
 
