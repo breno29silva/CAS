@@ -1,4 +1,4 @@
-package com.example.cervejas;
+package com.example.cervejas.controllers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +11,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cervejas.activity.MainActivity;
+import com.example.cervejas.R;
 import com.example.cervejas.activity.BeearDetails_activity;
 import com.example.cervejas.adapter.Beer_adapter;
 import com.example.cervejas.fragments.FailInternetFragment;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.RecyclerItemClickListener;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MainController {
@@ -31,7 +34,7 @@ public class MainController {
         this.mainActivity = mainActivity;
         this.recyclerViewBeer = recyclerViewBeer;
         this.beers = beers;
-        this.adapter = new Beer_adapter(this.beers);
+        this.adapter = new Beer_adapter(this.beers, mainActivity);
     }
 
 
@@ -72,7 +75,7 @@ public class MainController {
                         Beer selectedBeer = beers.get(position);
                         //Passando dados para BeearDetails_activity
                         Intent intent = new Intent(mainActivity, BeearDetails_activity.class);
-                        intent.putExtra("selectBeer", selectedBeer);
+                        intent.putExtra("selectBeer", (Serializable) selectedBeer);
                         mainActivity.startActivity(intent);
 
                     }
@@ -103,6 +106,7 @@ public class MainController {
 
     public void searchFilter(String search){
         adapter.getFilter().filter(search);
+
     }
 
 

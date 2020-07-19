@@ -1,5 +1,6 @@
 package com.example.cervejas.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cervejas.Helpers;
 import com.example.cervejas.R;
+import com.example.cervejas.activity.MainActivity;
+import com.example.cervejas.fragments.FailInternetFragment;
+import com.example.cervejas.fragments.SearchEmptyFragment;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.Images;
 import com.like.LikeButton;
@@ -24,11 +30,17 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
     private List<Beer> beers;
     private List<Beer> allBeers;
+    private SearchEmptyFragment searchEmptyFragment;
+    private MainActivity mainActivity;
+    private Helpers helpers;
 
 
-    public Beer_adapter(List<Beer> beers) {
+    public Beer_adapter(List<Beer> beers, MainActivity mainActivity) {
         this.beers = beers;
         this.allBeers = new ArrayList<>(beers);
+        this.mainActivity = mainActivity;
+        helpers = new Helpers();
+
         notifyDataSetChanged();
     }
 
@@ -46,20 +58,21 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Beer beer = beers.get(position);
+        final Beer beer = beers.get(position);
 
         holder.title.setText(beer.getName());
         holder.subTitle.setText(beer.getTagline());
         Images.showImages(holder.imageViewBeer, beer.getImage_url());
+
         holder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-
+                helpers.saveData(beer);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-
+                Log.d("Teste", "unLiked: " +  helpers.allFavorite().size());
             }
         });
     }
@@ -99,9 +112,9 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
             List<Beer> filterList = new ArrayList<>();
 
 
-
             if (constraint == null || constraint.length() == 0) {
                 filterList.addAll(allBeers);
+
             } else {
                 String filter = constraint.toString().toLowerCase().trim();
 
@@ -120,11 +133,18 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-
             beers.clear();
             beers.addAll((List) results.values);
             notifyDataSetChanged();
 
         }
     };
+
+
+    private void showSearchEmpty() {
+        searchEmptyFragment = new SearchEmptyFragment();
+        FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.frameLayoutMain, searchEmptyFragment);
+        transaction.commit();
+    }
 }

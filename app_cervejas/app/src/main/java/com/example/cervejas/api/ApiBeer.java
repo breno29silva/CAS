@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiBeer {
 
     private static final String URL_API = "https://api.punkapi.com";
+    final String TAG = "ApiBeer";
 
 
     private static Retrofit getRetrofit() {
@@ -37,4 +38,7 @@ public class ApiBeer {
         return beerService;
 
     }
+
+
+
 }

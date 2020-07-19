@@ -2,7 +2,6 @@ package com.example.cervejas.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,6 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.example.cervejas.MainActivity;
 import com.example.cervejas.R;
 import com.example.cervejas.api.ApiBeer;
 import com.example.cervejas.model.Beer;
@@ -48,12 +46,13 @@ public class Splash_activity extends AppCompatActivity {
             public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
                 if (response.isSuccessful()) {
                     beers = response.body();
+
                 }
             }
 
             @Override
             public void onFailure(Call<List<Beer>> call, Throwable t) {
-
+                Log.d("Error", t.getMessage());
             }
         });
 
@@ -65,7 +64,7 @@ public class Splash_activity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("listBeers", (Serializable) beers);
                 //Abrir a mainActivity
-                //new Intent(getBaseContext(), MainActivity.class)
+                new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
 
                 //Matar activity

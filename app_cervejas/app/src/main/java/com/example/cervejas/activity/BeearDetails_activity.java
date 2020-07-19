@@ -31,7 +31,6 @@ public class BeearDetails_activity extends AppCompatActivity {
         description = findViewById(R.id.textViewDescription);
         imageViewBeer = findViewById(R.id.imageViewBeer);
 
-
         //Recuperando dados
         beerSelected = (Beer) getIntent().getSerializableExtra("selectBeer");
 
