@@ -23,14 +23,13 @@ import retrofit2.Response;
 
 public class Splash_activity extends AppCompatActivity {
     private List<Beer> beers = new ArrayList<>();
+    private static int SPLASH_TIME_OUT = 1500;
+    private final static String TAG = "Splash_activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_activity);
-
-        ApiBeer apiBeer = new ApiBeer();
-
 
         //Esconder ActionBar
         getSupportActionBar().hide();
@@ -39,39 +38,20 @@ public class Splash_activity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
-        final Call<List<Beer>> beerList = ApiBeer.getBeerService().getBeers();
-
-        beerList.enqueue(new Callback<List<Beer>>() {
-            @Override
-            public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
-                if (response.isSuccessful()) {
-                    beers = response.body();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Beer>> call, Throwable t) {
-                Log.d("Error", t.getMessage());
-            }
-        });
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("listBeers", (Serializable) beers);
+
                 //Abrir a mainActivity
-                new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getBaseContext(), MainActivity.class));
 
                 //Matar activity
                 finish();
 
             }
-        }, 1500);
+        }, SPLASH_TIME_OUT);
     }
 
 

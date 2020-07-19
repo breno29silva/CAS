@@ -30,19 +30,16 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
     private List<Beer> beers;
     private List<Beer> allBeers;
     private SearchEmptyFragment searchEmptyFragment;
-    private MainActivity mainActivity;
+
     private Helpers helpers;
 
 
-    public Beer_adapter(List<Beer> beers, MainActivity mainActivity) {
+    public Beer_adapter(List<Beer> beers) {
         this.beers = beers;
         this.allBeers = new ArrayList<>(beers);
-        this.mainActivity = mainActivity;
         helpers = new Helpers();
-
         notifyDataSetChanged();
     }
-
 
     @NonNull
     @Override
@@ -141,11 +138,4 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
         }
     };
 
-
-    private void showSearchEmpty() {
-        searchEmptyFragment = new SearchEmptyFragment();
-        FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frameLayoutMain, searchEmptyFragment);
-        transaction.commit();
-    }
 }

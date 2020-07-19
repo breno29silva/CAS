@@ -1,15 +1,7 @@
 package com.example.cervejas.api;
 
-import android.util.Log;
-
-import com.example.cervejas.model.Beer;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -22,10 +14,19 @@ public class ApiBeer {
 
     private static Retrofit getRetrofit() {
 
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient
+                .Builder()
+                .addInterceptor(httpLoggingInterceptor)
+                .build();
+
         //Criando retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build();
 
         return retrofit;
@@ -38,7 +39,5 @@ public class ApiBeer {
         return beerService;
 
     }
-
-
 
 }

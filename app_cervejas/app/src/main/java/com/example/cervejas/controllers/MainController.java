@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -15,6 +16,7 @@ import com.example.cervejas.activity.MainActivity;
 import com.example.cervejas.R;
 import com.example.cervejas.activity.BeearDetails_activity;
 import com.example.cervejas.adapter.Beer_adapter;
+import com.example.cervejas.api.ApiBeer;
 import com.example.cervejas.fragments.FailInternetFragment;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.RecyclerItemClickListener;
@@ -22,43 +24,45 @@ import com.example.cervejas.utils.RecyclerItemClickListener;
 import java.io.Serializable;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainController {
     private MainActivity mainActivity;
     private FailInternetFragment failInternetFragment;
     private List<Beer> beers;
     private RecyclerView recyclerViewBeer;
     private Beer_adapter adapter;
+    private Call<List<Beer>> beerList;
 
 
-    public MainController(MainActivity mainActivity, List<Beer> beers, RecyclerView recyclerViewBeer) {
+    public MainController(MainActivity mainActivity, RecyclerView recyclerViewBeer) {
         this.mainActivity = mainActivity;
         this.recyclerViewBeer = recyclerViewBeer;
-        this.beers = beers;
-        this.adapter = new Beer_adapter(this.beers, mainActivity);
     }
 
+    public void begin() {
+        beerList = ApiBeer.getBeerService().getBeers();
+        beerList.enqueue(new Callback<List<Beer>>() {
+            @Override
+            public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
+                if (response.isSuccessful()) {
+                    beers = response.body();
+                    adapter = new Beer_adapter(beers);
+                    showRecycleView(recyclerViewBeer);
+                } else {
+                    Log.d("TAG", "onResponse Error");
+                }
+            }
 
-    public void showScreen() {
-        if (!isConnected()) {
-            showNoInternet();
-        } else {
-            showRecycleView(recyclerViewBeer);
-        }
+            @Override
+            public void onFailure(Call<List<Beer>> call, Throwable t) {
+                Log.d("TAG", t.getMessage());
+                showNoInternet();
+            }
+        });
     }
-
-
-    private boolean isConnected() {
-        //Verificando conecao
-        ConnectivityManager cm =
-                (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
-        return isConnected;
-    }
-
 
     private void showRecycleView(RecyclerView recyclerViewBeer) {
         //Configurar RecyclerView
@@ -100,13 +104,8 @@ public class MainController {
         transaction.commit();
     }
 
-    public void updateRecyclerView(){
-        adapter.notifyDataSetChanged();
-    }
-
-    public void searchFilter(String search){
+    public void searchFilter(String search) {
         adapter.getFilter().filter(search);
-
     }
 
 

@@ -1,5 +1,4 @@
 package com.example.cervejas.activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,22 +6,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.cervejas.R;
 import com.example.cervejas.controllers.MainController;
-import com.example.cervejas.model.Beer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewBeer;
-    private List<Beer> beers;
+
     private MainController controller;
 
 
@@ -33,19 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         recyclerViewBeer = findViewById(R.id.recyclerViewBeer);
-        beers = new ArrayList<>();
-        //Recuperando dados
-        beers = (List<Beer>) getIntent().getSerializableExtra("listBeers");
 
-        controller = new MainController(MainActivity.this, beers, recyclerViewBeer);
-        controller.showScreen();
 
-    }
+        controller = new MainController(MainActivity.this, recyclerViewBeer);
+        controller.begin();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        controller.updateRecyclerView();
+
     }
 
     @Override
@@ -90,5 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
 
 
