@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Table
 public class Beer extends SugarRecord implements Serializable {
 
-    transient private long id;
     private String name;
     private String tagline;
     private String description;
@@ -40,12 +39,6 @@ public class Beer extends SugarRecord implements Serializable {
     public String getImage_url() {
         return image_url;
     }
-
-
-    public Long getId() {
-        return id;
-    }
-
 
 
     public Boolean getFavorite() {

@@ -16,13 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cervejas.Helpers;
 import com.example.cervejas.R;
 import com.example.cervejas.activity.MainActivity;
-import com.example.cervejas.fragments.FailInternetFragment;
 import com.example.cervejas.fragments.SearchEmptyFragment;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.Images;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
-import com.orm.SugarContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +40,8 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
         this.mainActivity = mainActivity;
         helpers = new Helpers();
 
-
-
         notifyDataSetChanged();
     }
-
 
 
     @NonNull
@@ -64,13 +59,15 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         final Beer beer = beers.get(position);
+        List<Beer> list = new ArrayList<>();
+        list = helpers.allFavorite();
 
         holder.title.setText(beer.getName());
         holder.subTitle.setText(beer.getTagline());
         Images.showImages(holder.imageViewBeer, beer.getImage_url());
 
 
-        holder.likeButton.setOnLikeListener(new OnLikeListener() {
+        holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
                 helpers.saveData(beer);
@@ -92,7 +89,7 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
         TextView title;
         TextView subTitle;
-        LikeButton likeButton;
+        LikeButton favoriteButton;
         ImageView imageViewBeer;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -100,7 +97,7 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
             title = itemView.findViewById(R.id.textViewTitle);
             subTitle = itemView.findViewById(R.id.textViewSubTitle);
-            likeButton = itemView.findViewById(R.id.star_button);
+            favoriteButton = itemView.findViewById(R.id.star_button);
             imageViewBeer = itemView.findViewById(R.id.imageViewBeer);
 
         }
