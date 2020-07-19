@@ -10,10 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cervejas.R;
+import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.Images;
 import com.like.LikeButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Favorites_adapter extends RecyclerView.Adapter<Favorites_adapter.MyViewHolder> {
+
+    private List<Beer> favoriteBeers;
+
+    public Favorites_adapter(List<Beer> favoriteBeers) {
+        this.favoriteBeers = favoriteBeers;
+    }
 
     @NonNull
     @Override
@@ -29,10 +39,11 @@ public class Favorites_adapter extends RecyclerView.Adapter<Favorites_adapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+        Beer favoteBeer = favoriteBeers.get(position);
 
-        holder.title.setText("Valor teste");
-        holder.subTitle.setText("Valor teste");
-        //Images.showImages(holder.imageViewBeer, beer.getImage_url());
+        holder.title.setText(favoteBeer.getName());
+        holder.subTitle.setText(favoteBeer.getTagline());
+        Images.showImages(holder.imageViewBeer, favoteBeer.getImage_url());
         holder.favoriteButton.setLiked(true);
 
 
@@ -40,7 +51,7 @@ public class Favorites_adapter extends RecyclerView.Adapter<Favorites_adapter.My
 
     @Override
     public int getItemCount() {
-        return 10;
+        return favoriteBeers.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

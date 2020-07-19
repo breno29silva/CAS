@@ -22,6 +22,7 @@ import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.Images;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.orm.SugarContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,12 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
         this.mainActivity = mainActivity;
         helpers = new Helpers();
 
+
+
         notifyDataSetChanged();
     }
+
+
 
     @NonNull
     @Override

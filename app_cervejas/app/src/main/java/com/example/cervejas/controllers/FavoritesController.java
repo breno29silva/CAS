@@ -1,17 +1,21 @@
 package com.example.cervejas.controllers;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cervejas.Helpers;
 import com.example.cervejas.activity.BeearDetails_activity;
 import com.example.cervejas.activity.FavoritesActivity;
 import com.example.cervejas.adapter.Favorites_adapter;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.RecyclerItemClickListener;
+import com.google.common.collect.Lists;
+import com.orm.SugarRecord;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,28 +27,33 @@ public class FavoritesController {
     private FavoritesActivity favoritesActivity;
     private Favorites_adapter adapter;
     private List<Beer> favoriteBeers;
+    private Helpers helpers;
 
 
     public FavoritesController(RecyclerView recyclerViewFavorite, FavoritesActivity favoritesActivity) {
         this.recyclerViewFavorite = recyclerViewFavorite;
         this.favoritesActivity = favoritesActivity;
-        adapter = new Favorites_adapter();
         favoriteBeers = new ArrayList<>();
-        favoriteBeers = Beer.listAll(Beer.class);
+        helpers = new Helpers();
+
+        favoriteBeers = helpers.allFavorite();
+
+        adapter = new Favorites_adapter(favoriteBeers);
     }
 
-   public void showRecycleView() {
+    public void showRecycleView() {
         //Configurar RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(favoritesActivity.getApplicationContext());
-       recyclerViewFavorite.setLayoutManager(layoutManager);
-       recyclerViewFavorite.setHasFixedSize(true);
-       recyclerViewFavorite.setAdapter(adapter);
+        recyclerViewFavorite.setLayoutManager(layoutManager);
+        recyclerViewFavorite.setHasFixedSize(true);
+        recyclerViewFavorite.setAdapter(adapter);
 
-       recyclerViewFavorite.addOnItemTouchListener(new RecyclerItemClickListener(favoritesActivity.getApplicationContext(),
-               recyclerViewFavorite,
+        recyclerViewFavorite.addOnItemTouchListener(new RecyclerItemClickListener(favoritesActivity.getApplicationContext(),
+                recyclerViewFavorite,
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+
                         Beer selectedBeer = favoriteBeers.get(position);
                         //Passando dados para BeearDetails_activity
                         Intent intent = new Intent(favoritesActivity, BeearDetails_activity.class);

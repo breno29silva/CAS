@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.example.cervejas.R;
 import com.example.cervejas.controllers.FavoritesController;
+import com.orm.SugarRecord;
 
 public class FavoritesActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class FavoritesActivity extends AppCompatActivity {
         controller = new FavoritesController(recyclerViewBeer, FavoritesActivity.this);
 
         controller.showRecycleView();
+
     }
 
 

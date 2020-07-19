@@ -1,18 +1,21 @@
 package com.example.cervejas.model;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
 import java.io.Serializable;
 
-public class Beer extends SugarRecord<Beer> implements Serializable {
+@Table
+public class Beer extends SugarRecord implements Serializable {
 
-
+    transient private long id;
     private String name;
     private String tagline;
     private String description;
     private String image_url;
     private Boolean isFavorite;
 
+    public Beer() {}
 
     public Beer(String name, String tagline, String description, String url) {
         this.name = name;
@@ -38,9 +41,12 @@ public class Beer extends SugarRecord<Beer> implements Serializable {
         return image_url;
     }
 
+
     public Long getId() {
         return id;
     }
+
+
 
     public Boolean getFavorite() {
         return isFavorite;
