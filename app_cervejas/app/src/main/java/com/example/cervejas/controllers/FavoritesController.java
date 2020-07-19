@@ -1,21 +1,18 @@
 package com.example.cervejas.controllers;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cervejas.Helpers;
+import com.example.cervejas.helpers.Helpers;
 import com.example.cervejas.activity.BeearDetails_activity;
 import com.example.cervejas.activity.FavoritesActivity;
 import com.example.cervejas.adapter.Favorites_adapter;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.RecyclerItemClickListener;
-import com.google.common.collect.Lists;
-import com.orm.SugarRecord;
 
 import java.io.Serializable;
 import java.util.ArrayList;

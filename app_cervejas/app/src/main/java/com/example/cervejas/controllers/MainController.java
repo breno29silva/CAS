@@ -145,5 +145,10 @@ public class MainController {
             adapter.getFilter().filter(search);
     }
 
+    public void update(){
+        if(adapter != null)
+            adapter.update();
+    }
+
 
 }

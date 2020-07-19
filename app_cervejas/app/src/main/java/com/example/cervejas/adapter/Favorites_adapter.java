@@ -1,6 +1,5 @@
 package com.example.cervejas.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cervejas.Helpers;
+import com.example.cervejas.helpers.Helpers;
 import com.example.cervejas.R;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.Images;
@@ -58,19 +57,12 @@ public class Favorites_adapter extends RecyclerView.Adapter<Favorites_adapter.My
 
             @Override
             public void unLiked(LikeButton likeButton) {
-
                 Long id = favoteBeer.getId();
                 helpers.deleteFavorite(id);
-
                 favoriteBeers = helpers.allFavorite();
                 notifyDataSetChanged();
-
             }
-
         });
-
-
-
     }
 
     @Override

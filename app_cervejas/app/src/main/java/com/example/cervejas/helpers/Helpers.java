@@ -1,4 +1,4 @@
-package com.example.cervejas;
+package com.example.cervejas.helpers;
 
 import com.example.cervejas.model.Beer;
 
@@ -8,9 +8,7 @@ public class Helpers {
 
 
     public void saveData(Beer beer) {
-        beer.setFavorite(false);
         beer.setId(beer.getId());
-
         beer.save();
     }
 

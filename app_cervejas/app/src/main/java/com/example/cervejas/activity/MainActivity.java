@@ -24,14 +24,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         recyclerViewBeer = findViewById(R.id.recyclerViewBeer);
-
 
         controller = new MainController(MainActivity.this, recyclerViewBeer);
         controller.begin();
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        controller.update();
     }
 
     @Override

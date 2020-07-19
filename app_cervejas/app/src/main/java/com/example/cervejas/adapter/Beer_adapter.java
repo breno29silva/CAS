@@ -8,13 +8,12 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cervejas.Helpers;
+import com.example.cervejas.helpers.Helpers;
 import com.example.cervejas.R;
 import com.example.cervejas.activity.MainActivity;
 import com.example.cervejas.fragments.SearchEmptyFragment;
@@ -30,10 +29,10 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
     private List<Beer> beers;
     private List<Beer> allBeers;
+    private List<Beer> favorites;
     private Helpers helpers;
     private MainActivity mainActivity;
     private SearchEmptyFragment searchEmptyFragment;
-
 
     public Beer_adapter(List<Beer> beers, MainActivity mainActivity) {
         this.beers = beers;
@@ -58,11 +57,22 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         final Beer beer = beers.get(position);
+        favorites = helpers.allFavorite();
 
         holder.title.setText(beer.getName());
         holder.subTitle.setText(beer.getTagline());
         Images.showImages(holder.imageViewBeer, beer.getImage_url());
 
+        holder.favoriteButton.setLiked(false);
+        //Marcando as favoritas
+        Log.d("TAG", "onBindViewHolder: " + favorites.size());
+        for(Beer b: favorites){
+            Log.d("TAG", "onBindViewHolder: " + favorites.size() + b.getName());
+            if(b.getName().equals(beer.getName())){
+                holder.favoriteButton.setLiked(true);
+                break;
+            }
+        }
 
         holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
@@ -72,7 +82,8 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
             @Override
             public void unLiked(LikeButton likeButton) {
-
+                Long id = beer.getId();
+                helpers.deleteFavorite(id);
             }
         });
     }
@@ -141,7 +152,6 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
         }
     };
 
-
     private void showAlert(int size) {
         if (size == 0) {
             showFragment();
@@ -161,6 +171,11 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
             transaction.add(R.id.frameLayoutMain, searchEmptyFragment);
             transaction.commit();
         }
+    }
+
+    public void update(){
+        Log.d("TAG", "update: ou");
+        notifyDataSetChanged();
     }
 
 }
