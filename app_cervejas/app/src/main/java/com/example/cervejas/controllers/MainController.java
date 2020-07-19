@@ -3,6 +3,8 @@ package com.example.cervejas.controllers;
 import android.content.Context;
 import android.content.Intent;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,28 +50,32 @@ public class MainController {
     }
 
     public void begin() {
-        showLoding();
 
-        beerList = ApiBeer.getBeerService().getBeers();
-        beerList.enqueue(new Callback<List<Beer>>() {
-            @Override
-            public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
-                if (response.isSuccessful()) {
-                    closeFragment();
-                    beers = response.body();
-                    adapter = new Beer_adapter(beers);
-                    showRecycleView(recyclerViewBeer);
-                } else {
-                    Log.d("TAG", "onResponse Error");
+        if (isConnected()) {
+            beerList = ApiBeer.getBeerService().getBeers();
+            beerList.enqueue(new Callback<List<Beer>>() {
+                @Override
+                public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
+                    showLoding();
+                    if (response.isSuccessful()) {
+                        closeFragment();
+                        beers = response.body();
+                        adapter = new Beer_adapter(beers);
+                        showRecycleView(recyclerViewBeer);
+                    } else {
+                        Log.d("TAG", "onResponse Error");
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<Beer>> call, Throwable t) {
-                Log.d("TAG", t.getMessage());
-                showNoInternet();
-            }
-        });
+                @Override
+                public void onFailure(Call<List<Beer>> call, Throwable t) {
+                    Log.d("TAG", t.getMessage());
+                    showNoInternet();
+                }
+            });
+        } else {
+            showNoInternet();
+        }
     }
 
     private void showRecycleView(RecyclerView recyclerViewBeer) {
@@ -103,6 +109,18 @@ public class MainController {
                     }
                 }
         ));
+    }
+
+
+    public boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
     }
 
     private void showNoInternet() {
