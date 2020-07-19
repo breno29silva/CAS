@@ -1,4 +1,4 @@
-# teste_CAS
+# Aplicativo de avaliação
 Consumindo API para criar lista de cervejas
 
 Lib utilizada: https://github.com/square/picasso
