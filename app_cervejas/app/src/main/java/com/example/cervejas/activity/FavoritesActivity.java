@@ -20,6 +20,7 @@ public class FavoritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.screen_favorite_name);
 
         recyclerViewBeer = findViewById(R.id.recyclerViewFavorite);
         controller = new FavoritesController(recyclerViewBeer, FavoritesActivity.this);

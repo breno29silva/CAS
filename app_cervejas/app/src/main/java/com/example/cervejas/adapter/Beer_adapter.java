@@ -59,8 +59,6 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         final Beer beer = beers.get(position);
-        List<Beer> list = new ArrayList<>();
-        list = helpers.allFavorite();
 
         holder.title.setText(beer.getName());
         holder.subTitle.setText(beer.getTagline());
