@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cervejas</string>
+    <string name="no_intenet">Sem conexão</string>
+    <string name="try_connection">Tentar novamente</string>
+    <string name="search_empty">Sem resultado</string>
+    <string name="screen_favorite_name">Favoritas</string>
+    <string name="hint_search">Buscar cervejas...</string>
+</resources>
