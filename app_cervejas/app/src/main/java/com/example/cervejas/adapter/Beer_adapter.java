@@ -8,6 +8,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,13 +30,14 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
 
     private List<Beer> beers;
     private List<Beer> allBeers;
+    private Helpers helpers;
+    private MainActivity mainActivity;
     private SearchEmptyFragment searchEmptyFragment;
 
-    private Helpers helpers;
 
-
-    public Beer_adapter(List<Beer> beers) {
+    public Beer_adapter(List<Beer> beers, MainActivity mainActivity) {
         this.beers = beers;
+        this.mainActivity = mainActivity;
         this.allBeers = new ArrayList<>(beers);
         helpers = new Helpers();
         notifyDataSetChanged();
@@ -123,9 +125,11 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
                 }
             }
 
+            //Mostrar alerta de aviso
+            showAlert(filterList.size());
+
             FilterResults results = new FilterResults();
             results.values = filterList;
-
             return results;
         }
 
@@ -134,8 +138,29 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
             beers.clear();
             beers.addAll((List) results.values);
             notifyDataSetChanged();
-
         }
     };
+
+
+    private void showAlert(int size) {
+        if (size == 0) {
+            showFragment();
+        }
+
+        if (searchEmptyFragment != null && size != 0) {
+            mainActivity.getSupportFragmentManager().beginTransaction().remove(searchEmptyFragment).commit();
+            searchEmptyFragment = null;
+        }
+    }
+
+    private void showFragment() {
+        //Permitir criar apenas uma fragment
+        if (searchEmptyFragment == null) {
+            searchEmptyFragment = new SearchEmptyFragment();
+            FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.frameLayoutMain, searchEmptyFragment);
+            transaction.commit();
+        }
+    }
 
 }

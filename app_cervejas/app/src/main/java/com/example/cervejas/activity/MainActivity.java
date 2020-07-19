@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Desabilitar o icon e de search do telcado
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setQueryHint(getString(R.string.hint_search));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

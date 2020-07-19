@@ -60,7 +60,7 @@ public class MainController {
                     if (response.isSuccessful()) {
                         closeFragment();
                         beers = response.body();
-                        adapter = new Beer_adapter(beers);
+                        adapter = new Beer_adapter(beers, mainActivity);
                         showRecycleView(recyclerViewBeer);
                     } else {
                         Log.d("TAG", "onResponse Error");
@@ -140,7 +140,9 @@ public class MainController {
     }
 
     public void searchFilter(String search) {
-        adapter.getFilter().filter(search);
+        //Bucar apenas se o adater for criado
+        if(adapter != null)
+            adapter.getFilter().filter(search);
     }
 
 
