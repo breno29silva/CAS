@@ -25,7 +25,6 @@ import retrofit2.Response;
 
 public class Splash_activity extends AppCompatActivity {
     private List<Beer> beers = new ArrayList<>();
-    private  SplashController splashController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

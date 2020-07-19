@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -39,9 +42,14 @@ public class MainActivity extends AppCompatActivity {
         //Recuperando dados
         beers = (List<Beer>) getIntent().getSerializableExtra("listBeers");
         controller = new MainController(MainActivity.this, beers, recyclerViewBeer);
+        controller.showScreen();
 
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        controller.updateRecyclerView();
     }
 
     @Override
@@ -49,13 +57,26 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        return true;
-    }
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        controller.showScreen();
+        //Desabilitar o icon e de search do telcado
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+               controller.searchFilter(newText);
+                return false;
+            }
+        });
+
+        return true;
     }
 }
 

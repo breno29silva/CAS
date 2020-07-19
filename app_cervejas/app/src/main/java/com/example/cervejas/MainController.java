@@ -101,4 +101,9 @@ public class MainController {
         adapter.notifyDataSetChanged();
     }
 
+    public void searchFilter(String search){
+        adapter.getFilter().filter(search);
+    }
+
+
 }
