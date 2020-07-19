@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,8 +46,8 @@ public class MainController {
         this.recyclerViewBeer = recyclerViewBeer;
     }
 
-    public void closeFragment() {
-        mainActivity.getSupportFragmentManager().beginTransaction().remove(loadingFragment).commit();
+    public void closeFragment(Fragment fragment) {
+        mainActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 
     public void begin() {
@@ -58,7 +59,7 @@ public class MainController {
                 @Override
                 public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
                     if (response.isSuccessful()) {
-                        closeFragment();
+                        closeFragment(loadingFragment);
                         beers = response.body();
                         adapter = new Beer_adapter(beers, mainActivity);
                         showRecycleView(recyclerViewBeer);
@@ -125,28 +126,29 @@ public class MainController {
     }
 
     private void showNoInternet() {
-        failInternetFragment = new FailInternetFragment();
+        if (failInternetFragment == null)
+            failInternetFragment = new FailInternetFragment();
         FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayoutMain, failInternetFragment);
         transaction.commit();
     }
 
     private void showLoding() {
-        loadingFragment = new LoadingFragment();
+        if (loadingFragment == null)
+            loadingFragment = new LoadingFragment();
         FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayoutMain, loadingFragment);
         transaction.commit();
-
     }
 
     public void searchFilter(String search) {
         //Bucar apenas se o adater for criado
-        if(adapter != null)
+        if (adapter != null)
             adapter.getFilter().filter(search);
     }
 
-    public void update(){
-        if(adapter != null)
+    public void update() {
+        if (adapter != null)
             adapter.update();
     }
 

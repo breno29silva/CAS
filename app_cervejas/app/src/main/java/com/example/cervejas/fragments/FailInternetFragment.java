@@ -32,13 +32,7 @@ public class FailInternetFragment extends Fragment {
 
         btnTryConnection = view.findViewById(R.id.btnTryConnection);
 
-        btnTryConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Splash_activity.class));
-
-            }
-        });
+        btnTryConnection.setOnClickListener(v -> startActivity(new Intent(getContext(), Splash_activity.class)));
 
         return view;
     }
