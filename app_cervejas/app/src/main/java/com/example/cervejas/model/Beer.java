@@ -13,11 +13,8 @@ public class Beer extends SugarRecord<Beer> implements Serializable {
     private String image_url;
     private Boolean isFavorite;
 
-    public Beer() {
-    }
 
     public Beer(String name, String tagline, String description, String url) {
-
         this.name = name;
         this.tagline = tagline;
         this.description = description;

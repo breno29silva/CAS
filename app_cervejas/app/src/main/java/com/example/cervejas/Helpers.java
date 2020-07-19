@@ -17,13 +17,15 @@ public class Helpers {
     public List<Beer> allFavorite() {
         List<Beer> favoriteBeers = Beer.listAll(Beer.class);
 
+
+
+
         return favoriteBeers;
     }
 
     public void deleteFavorite(Beer beer) {
         beer.delete();
     }
-
 
 
 }

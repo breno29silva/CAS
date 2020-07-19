@@ -64,15 +64,17 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
         holder.subTitle.setText(beer.getTagline());
         Images.showImages(holder.imageViewBeer, beer.getImage_url());
 
+
         holder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
                 helpers.saveData(beer);
+
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                Log.d("Teste", "unLiked: " +  helpers.allFavorite().size());
+
             }
         });
     }
