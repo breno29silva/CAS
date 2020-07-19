@@ -52,11 +52,11 @@ public class MainController {
     public void begin() {
 
         if (isConnected()) {
+            showLoding();
             beerList = ApiBeer.getBeerService().getBeers();
             beerList.enqueue(new Callback<List<Beer>>() {
                 @Override
                 public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
-                    showLoding();
                     if (response.isSuccessful()) {
                         closeFragment();
                         beers = response.body();
@@ -64,6 +64,7 @@ public class MainController {
                         showRecycleView(recyclerViewBeer);
                     } else {
                         Log.d("TAG", "onResponse Error");
+                        showNoInternet();
                     }
                 }
 
