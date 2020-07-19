@@ -2,8 +2,7 @@ package com.example.cervejas.controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +17,7 @@ import com.example.cervejas.activity.BeearDetails_activity;
 import com.example.cervejas.adapter.Beer_adapter;
 import com.example.cervejas.api.ApiBeer;
 import com.example.cervejas.fragments.FailInternetFragment;
+import com.example.cervejas.fragments.LoadingFragment;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.RecyclerItemClickListener;
 
@@ -31,6 +31,7 @@ import retrofit2.Response;
 public class MainController {
     private MainActivity mainActivity;
     private FailInternetFragment failInternetFragment;
+    private LoadingFragment loadingFragment;
     private List<Beer> beers;
     private RecyclerView recyclerViewBeer;
     private Beer_adapter adapter;
@@ -42,12 +43,19 @@ public class MainController {
         this.recyclerViewBeer = recyclerViewBeer;
     }
 
+    public void closeFragment() {
+        mainActivity.getSupportFragmentManager().beginTransaction().remove(loadingFragment).commit();
+    }
+
     public void begin() {
+        showLoding();
+
         beerList = ApiBeer.getBeerService().getBeers();
         beerList.enqueue(new Callback<List<Beer>>() {
             @Override
             public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
                 if (response.isSuccessful()) {
+                    closeFragment();
                     beers = response.body();
                     adapter = new Beer_adapter(beers);
                     showRecycleView(recyclerViewBeer);
@@ -102,6 +110,14 @@ public class MainController {
         FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayoutMain, failInternetFragment);
         transaction.commit();
+    }
+
+    private void showLoding() {
+        loadingFragment = new LoadingFragment();
+        FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.frameLayoutMain, loadingFragment);
+        transaction.commit();
+
     }
 
     public void searchFilter(String search) {
