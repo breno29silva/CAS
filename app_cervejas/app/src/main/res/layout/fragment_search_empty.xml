@@ -23,8 +23,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="200sp"
-        android:layout_height="200sp"
+        android:layout_width="180sp"
+        android:layout_height="180sp"
         android:src="@drawable/ic_search_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
