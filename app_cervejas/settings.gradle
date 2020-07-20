@@ -1,0 +1,2 @@
+rootProject.name='Cervejas'
+include ':app'

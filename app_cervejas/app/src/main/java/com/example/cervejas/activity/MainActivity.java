@@ -1,6 +1,7 @@
 package com.example.cervejas.activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,11 +14,8 @@ import com.example.cervejas.controllers.MainController;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private RecyclerView recyclerViewBeer;
-
     private MainController controller;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
 }
 
 

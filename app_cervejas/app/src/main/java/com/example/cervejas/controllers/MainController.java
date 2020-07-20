@@ -47,7 +47,8 @@ public class MainController {
     }
 
     public void closeFragment(Fragment fragment) {
-        mainActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        if (fragment != null)
+            mainActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 
     public void begin() {

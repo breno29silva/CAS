@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Beer List</string>
+    <string name="no_intenet">No internet connection</string>
+    <string name="try_connection">try connection</string>
+    <string name="search_empty">No results were found</string>
+    <string name="screen_favorite_name">Favorites</string>
+    <string name="hint_search">Buscar cerveja...</string>
+
+</resources>
