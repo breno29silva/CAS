@@ -1,20 +1,10 @@
 package com.example.cervejas.controllers;
-
-import android.content.Intent;
-import android.view.View;
-import android.widget.AdapterView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.cervejas.helpers.Helpers;
-import com.example.cervejas.activity.BeearDetailsActivity;
 import com.example.cervejas.activity.FavoritesActivity;
 import com.example.cervejas.adapter.FavoritesAdapter;
 import com.example.cervejas.model.Beer;
-import com.example.cervejas.utils.RecyclerItemClickListener;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +25,7 @@ public class FavoritesController {
 
         favoriteBeers = helpers.allFavorite();
 
-        adapter = new FavoritesAdapter(favoriteBeers);
+        adapter = new FavoritesAdapter(favoriteBeers, favoritesActivity);
     }
 
     public void showRecycleView() {
@@ -44,32 +34,5 @@ public class FavoritesController {
         recyclerViewFavorite.setLayoutManager(layoutManager);
         recyclerViewFavorite.setHasFixedSize(true);
         recyclerViewFavorite.setAdapter(adapter);
-
-        recyclerViewFavorite.addOnItemTouchListener(new RecyclerItemClickListener(favoritesActivity.getApplicationContext(),
-                recyclerViewFavorite,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-
-                        Beer selectedBeer = favoriteBeers.get(position);
-                        //Passando dados para BeearDetails_activity
-                        Intent intent = new Intent(favoritesActivity, BeearDetailsActivity.class);
-                        intent.putExtra("selectBeer", (Serializable) selectedBeer);
-                        favoritesActivity.startActivity(intent);
-
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-
-                    }
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                }
-        ));
     }
-
 }

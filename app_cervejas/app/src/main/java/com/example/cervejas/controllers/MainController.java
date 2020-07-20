@@ -1,14 +1,9 @@
 package com.example.cervejas.controllers;
 
 import android.content.Context;
-import android.content.Intent;
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,17 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cervejas.activity.MainActivity;
 import com.example.cervejas.R;
-import com.example.cervejas.activity.BeearDetailsActivity;
 import com.example.cervejas.adapter.BeerAdapter;
 import com.example.cervejas.api.ApiBeer;
 import com.example.cervejas.fragments.FailInternetFragment;
 import com.example.cervejas.fragments.LoadingFragment;
 import com.example.cervejas.model.Beer;
-import com.example.cervejas.utils.RecyclerItemClickListener;
-
-import java.io.Serializable;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,37 +71,13 @@ public class MainController {
         }
     }
 
+
     private void showRecycleView(RecyclerView recyclerViewBeer) {
         //Configurar RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mainActivity.getApplicationContext());
         recyclerViewBeer.setLayoutManager(layoutManager);
         recyclerViewBeer.setHasFixedSize(true);
         recyclerViewBeer.setAdapter(adapter);
-
-        recyclerViewBeer.addOnItemTouchListener(new RecyclerItemClickListener(mainActivity.getApplicationContext(),
-                recyclerViewBeer,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Beer selectedBeer = beers.get(position);
-                        //Passando dados para BeearDetails_activity
-                        Intent intent = new Intent(mainActivity, BeearDetailsActivity.class);
-                        intent.putExtra("selectBeer", (Serializable) selectedBeer);
-                        mainActivity.startActivity(intent);
-
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-
-                    }
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                }
-        ));
     }
 
 

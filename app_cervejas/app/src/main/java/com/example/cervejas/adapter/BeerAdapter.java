@@ -1,5 +1,6 @@
 package com.example.cervejas.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cervejas.activity.BeearDetailsActivity;
 import com.example.cervejas.helpers.Helpers;
 import com.example.cervejas.R;
 import com.example.cervejas.activity.MainActivity;
@@ -22,6 +24,7 @@ import com.example.cervejas.utils.Images;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +65,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.MyViewHolder> 
         holder.title.setText(beer.getName());
         holder.subTitle.setText(beer.getTagline());
         Images.showImages(holder.imageViewBeer, beer.getImage_url());
+        holder.position = position;
 
         holder.favoriteButton.setLiked(false);
         //Marcando as favoritas
@@ -99,9 +103,19 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.MyViewHolder> 
         TextView subTitle;
         LikeButton favoriteButton;
         ImageView imageViewBeer;
+        View item_layout;
+        int position;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            item_layout = itemView.findViewById(R.id.item_layout);
+            item_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDetails(position);
+                }
+            });
+
 
             title = itemView.findViewById(R.id.textViewTitle);
             subTitle = itemView.findViewById(R.id.textViewSubTitle);
@@ -109,6 +123,14 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.MyViewHolder> 
             imageViewBeer = itemView.findViewById(R.id.imageViewBeer);
 
         }
+    }
+
+    public void showDetails(int position){
+        Beer selectedBeer = beers.get(position);
+        //Passando dados para BeearDetails_activity
+        Intent intent = new Intent(mainActivity, BeearDetailsActivity.class);
+        intent.putExtra("selectBeer", (Serializable) selectedBeer);
+        mainActivity.startActivity(intent);
     }
 
     @Override
