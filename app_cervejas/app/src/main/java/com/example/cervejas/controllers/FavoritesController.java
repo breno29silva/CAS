@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cervejas.helpers.Helpers;
-import com.example.cervejas.activity.BeearDetails_activity;
+import com.example.cervejas.activity.BeearDetailsActivity;
 import com.example.cervejas.activity.FavoritesActivity;
-import com.example.cervejas.adapter.Favorites_adapter;
+import com.example.cervejas.adapter.FavoritesAdapter;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.RecyclerItemClickListener;
 
@@ -22,7 +22,7 @@ public class FavoritesController {
 
     private RecyclerView recyclerViewFavorite;
     private FavoritesActivity favoritesActivity;
-    private Favorites_adapter adapter;
+    private FavoritesAdapter adapter;
     private List<Beer> favoriteBeers;
     private Helpers helpers;
 
@@ -35,7 +35,7 @@ public class FavoritesController {
 
         favoriteBeers = helpers.allFavorite();
 
-        adapter = new Favorites_adapter(favoriteBeers);
+        adapter = new FavoritesAdapter(favoriteBeers);
     }
 
     public void showRecycleView() {
@@ -53,7 +53,7 @@ public class FavoritesController {
 
                         Beer selectedBeer = favoriteBeers.get(position);
                         //Passando dados para BeearDetails_activity
-                        Intent intent = new Intent(favoritesActivity, BeearDetails_activity.class);
+                        Intent intent = new Intent(favoritesActivity, BeearDetailsActivity.class);
                         intent.putExtra("selectBeer", (Serializable) selectedBeer);
                         favoritesActivity.startActivity(intent);
 

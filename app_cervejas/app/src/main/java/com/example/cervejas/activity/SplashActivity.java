@@ -21,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Splash_activity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
     private List<Beer> beers = new ArrayList<>();
     private static int SPLASH_TIME_OUT = 1500;
     private final static String TAG = "Splash_activity";

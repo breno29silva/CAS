@@ -11,7 +11,7 @@ import com.example.cervejas.R;
 import com.example.cervejas.model.Beer;
 import com.example.cervejas.utils.Images;
 
-public class BeearDetails_activity extends AppCompatActivity {
+public class BeearDetailsActivity extends AppCompatActivity {
 
     private TextView title;
     private TextView subTitle;

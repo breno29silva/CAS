@@ -27,9 +27,9 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.example.cervejas" />
 
-        <activity android:name=".activity.BeearDetails_activity" />
+        <activity android:name=".activity.BeearDetailsActivity" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.Splash_activity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

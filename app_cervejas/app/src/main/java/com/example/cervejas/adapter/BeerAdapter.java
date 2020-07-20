@@ -25,7 +25,7 @@ import com.like.OnLikeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder> implements Filterable {
+public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.MyViewHolder> implements Filterable {
 
     private List<Beer> beers;
     private List<Beer> allBeers;
@@ -34,7 +34,7 @@ public class Beer_adapter extends RecyclerView.Adapter<Beer_adapter.MyViewHolder
     private MainActivity mainActivity;
     private SearchEmptyFragment searchEmptyFragment;
 
-    public Beer_adapter(List<Beer> beers, MainActivity mainActivity) {
+    public BeerAdapter(List<Beer> beers, MainActivity mainActivity) {
         this.beers = beers;
         this.mainActivity = mainActivity;
         this.allBeers = new ArrayList<>(beers);

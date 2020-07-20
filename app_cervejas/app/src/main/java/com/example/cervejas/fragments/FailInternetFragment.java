@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.cervejas.R;
-import com.example.cervejas.activity.Splash_activity;
+import com.example.cervejas.activity.SplashActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +32,7 @@ public class FailInternetFragment extends Fragment {
 
         btnTryConnection = view.findViewById(R.id.btnTryConnection);
 
-        btnTryConnection.setOnClickListener(v -> startActivity(new Intent(getContext(), Splash_activity.class)));
+        btnTryConnection.setOnClickListener(v -> startActivity(new Intent(getContext(), SplashActivity.class)));
 
         return view;
     }

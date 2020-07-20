@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cervejas.activity.MainActivity;
 import com.example.cervejas.R;
-import com.example.cervejas.activity.BeearDetails_activity;
-import com.example.cervejas.adapter.Beer_adapter;
+import com.example.cervejas.activity.BeearDetailsActivity;
+import com.example.cervejas.adapter.BeerAdapter;
 import com.example.cervejas.api.ApiBeer;
 import com.example.cervejas.fragments.FailInternetFragment;
 import com.example.cervejas.fragments.LoadingFragment;
@@ -37,7 +37,7 @@ public class MainController {
     private LoadingFragment loadingFragment;
     private List<Beer> beers;
     private RecyclerView recyclerViewBeer;
-    private Beer_adapter adapter;
+    private BeerAdapter adapter;
     private Call<List<Beer>> beerList;
 
 
@@ -62,7 +62,7 @@ public class MainController {
                     if (response.isSuccessful()) {
                         closeFragment(loadingFragment);
                         beers = response.body();
-                        adapter = new Beer_adapter(beers, mainActivity);
+                        adapter = new BeerAdapter(beers, mainActivity);
                         showRecycleView(recyclerViewBeer);
                     } else {
                         Log.d("TAG", "onResponse Error");
@@ -95,7 +95,7 @@ public class MainController {
                     public void onItemClick(View view, int position) {
                         Beer selectedBeer = beers.get(position);
                         //Passando dados para BeearDetails_activity
-                        Intent intent = new Intent(mainActivity, BeearDetails_activity.class);
+                        Intent intent = new Intent(mainActivity, BeearDetailsActivity.class);
                         intent.putExtra("selectBeer", (Serializable) selectedBeer);
                         mainActivity.startActivity(intent);
 

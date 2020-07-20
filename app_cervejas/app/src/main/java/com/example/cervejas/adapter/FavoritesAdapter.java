@@ -18,12 +18,12 @@ import com.like.OnLikeListener;
 
 import java.util.List;
 
-public class Favorites_adapter extends RecyclerView.Adapter<Favorites_adapter.MyViewHolder> {
+public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.MyViewHolder> {
 
     private List<Beer> favoriteBeers;
     private Helpers helpers;
 
-    public Favorites_adapter(List<Beer> favoriteBeers) {
+    public FavoritesAdapter(List<Beer> favoriteBeers) {
         this.favoriteBeers = favoriteBeers;
         helpers = new Helpers();
     }
